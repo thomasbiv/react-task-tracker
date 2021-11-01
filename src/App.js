@@ -22,18 +22,32 @@ function App() {
           text: 'Food Shopping',
           day: 'Feb 6th at 3:30pm',
           reminder: false
-      }
+      },
     ])
 
   //Delete Task Function
-  const deleteTask = () => {
-    console.log('delete')
+  const deleteTask = (id) => {
+    setTasks(tasks.filter((task) => task.id !== id)) //display all tasks with an id that is not the passed id
+  }
+
+  const toggleReminder = (id) => {
+    setTasks(tasks.map((task) => task.id === id ? {...task, reminder: !task.reminder} : task))
   }
 
   return (
-    <div className="container">
+    <div className='container'>
       <Header title = 'Task Master'/>
-      <Tasks tasks = {tasks} onDelete={deleteTask}/>
+      {
+        tasks.length === 0
+        ? 
+          <div>
+            No tasks
+          </div>
+        :
+          <div>
+            <Tasks tasks = {tasks} onDelete={deleteTask} onToggle={toggleReminder}/>
+          </div>
+      }
     </div>
   );
 }
